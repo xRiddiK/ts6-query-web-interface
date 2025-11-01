@@ -119,9 +119,12 @@ npm run dev
 Open the [App](http://localhost:5173/)
 and you should see things
 
-*Create invite
+### Create invite
+#### Step 1
 ![Step 1](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_1.png)
+#### Step 2
 ![Step 2](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_2.png)
+#### Step 3
 ![Step 3](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_3.png)
 ## Authors
 - [@JXCS](https://github.com/xRiddiK)
