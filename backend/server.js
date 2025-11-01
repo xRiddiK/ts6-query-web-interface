@@ -84,6 +84,26 @@ app.get("/api/serverinfo", async (_req, res) => {
   }
 });
 
+// Added: channels endpoint — returns channels sorted by channel_order with decoded names
+app.get("/api/channels", async (_req, res) => {
+  try {
+    const channels = await ts.send("channellist");
+    const decoded = channels.map(decodeTSObject);
+    decoded.sort((a, b) => Number(a.channel_order || 0) - Number(b.channel_order || 0));
+    const mapped = decoded.map((c) => ({
+      cid: c.cid,
+      pid: c.pid,
+      channel_order: Number(c.channel_order || 0),
+      channel_name: c.channel_name,
+      total_clients: Number(c.total_clients || 0),
+    }));
+    res.json(mapped);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+//#endregion
+
 io.on("connection", async (socket) => {
   console.log("Web client connected");
 
@@ -98,6 +118,16 @@ io.on("connection", async (socket) => {
     socket.emit("clients", filtered);
   } catch (err) {
     console.error("initial clientlist error:", err.message);
+  }
+
+  // Emit initial channel list (sorted by channel_order)
+  try {
+    const channels = await ts.send("channellist");
+    const decodedChannels = channels.map(decodeTSObject);
+    decodedChannels.sort((a, b) => Number(a.channel_order || 0) - Number(b.channel_order || 0));
+    socket.emit("channels", decodedChannels);
+  } catch (err) {
+    console.error("initial channellist error:", err.message);
   }
 
   socket.on("sendCommand", async (cmd) => {
@@ -119,6 +149,16 @@ setInterval(async () => {
     io.emit("clients", decoded);
   } catch (e) {
     console.error("clientlist error:", e.message);
+  }
+
+  // Periodically update channels as well
+  try {
+    const channels = await ts.send("channellist");
+    const decodedChannels = channels.map(decodeTSObject);
+    decodedChannels.sort((a, b) => Number(a.channel_order || 0) - Number(b.channel_order || 0));
+    io.emit("channels", decodedChannels);
+  } catch (e) {
+    console.error("channellist error:", e.message);
   }
 }, 10_000);
 //#endregion
