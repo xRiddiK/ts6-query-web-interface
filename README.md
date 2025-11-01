@@ -40,7 +40,7 @@ Backend
 ```
 cd backend
 npm install
-or
+# or
 pnpm install
 ```
 Frontent
@@ -48,7 +48,7 @@ Frontent
 ```
 cd frontend
 npm install
-or
+# or
 pnpm install
 ```
 
@@ -112,7 +112,7 @@ Right-click your server → “Create Invite” → “Create” again → copy 
 Then start the frontend:
 ```
 pnpm dev
-or
+# or
 npm run dev
 ```
 
@@ -120,11 +120,15 @@ Open the [App](http://localhost:5173/)
 and you should see things
 
 ### Create invite
-#### Step 1
+#### Step 1: Right-click on your Server Banner and click on "Create Invite"
 ![Step 1](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_1.png)
-#### Step 2
+#### Step 2: Click on "Create Invite" again :)
 ![Step 2](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_2.png)
-#### Step 3
+#### Step 3: copy ONLY the highlighted "id" and paste it into "frontend/.env"
+```
+# example
+VITE_TS_INVID=W2Bj9DiH
+```
 ![Step 3](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_3.png)
 ## Authors
 - [@JXCS](https://github.com/xRiddiK)
