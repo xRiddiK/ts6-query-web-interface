@@ -9,11 +9,16 @@ export class TSQuery {
     this.ready = false;
     this.logFile = logFile;
     this.config = { host, port, user, pass };
+    this.debug = process.env.DEBUG_MODE === "true";
 
-    if (fs.existsSync(logFile)) fs.writeFileSync(logFile, "");
+    if (this.debug && fs.existsSync(logFile)) {
+      fs.writeFileSync(logFile, "");
+    }
   }
 
   log(msg) {
+    if (!this.debug) return;
+
     const line = `[${new Date().toISOString()}] ${msg}\n`;
     fs.appendFileSync(this.logFile, line);
     console.log(msg);

@@ -16,6 +16,8 @@ Built with **Node.js (Express + Socket.IO + SSH2)** on the backend.
 - Modern UI built with HeroUI + TailwindCSS (Modern but empty)
 - Works out of the box with any TS6 server with SSH Query enabled
 
+![Web App](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/webapp.png)
+![Web App](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/expanded_channelList.png)
 ---
 
 ## Requirements
@@ -105,7 +107,7 @@ const tsLink = "https://tmspk.gg/56zg425"; // replace with your ts link
 ```
 Replace it with your actual TeamSpeak invite link.
 >
-Right-click your server → “Create Invite” → “Create” again → copy the link → paste it there.
+Right-click your server → “Create Invite” → “Create” again → copy the link → paste it there. ("detailed" step by step below)
 
 Then start the frontend:
 ```
@@ -116,5 +118,10 @@ npm run dev
 
 Open the [App](http://localhost:5173/)
 and you should see things
+
+*Create invite
+![Step 1](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_1.png)
+![Step 2](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_2.png)
+![Step 3](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/createinv_3.png)
 ## Authors
 - [@JXCS](https://github.com/xRiddiK)

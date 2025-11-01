@@ -84,7 +84,6 @@ app.get("/api/serverinfo", async (_req, res) => {
   }
 });
 
-// Added: channels endpoint — returns channels sorted by channel_order with decoded names
 app.get("/api/channels", async (_req, res) => {
   try {
     const channels = await ts.send("channellist");
@@ -104,6 +103,7 @@ app.get("/api/channels", async (_req, res) => {
 });
 //#endregion
 
+//#region Socket.io
 io.on("connection", async (socket) => {
   console.log("Web client connected");
 
@@ -120,7 +120,6 @@ io.on("connection", async (socket) => {
     console.error("initial clientlist error:", err.message);
   }
 
-  // Emit initial channel list (sorted by channel_order)
   try {
     const channels = await ts.send("channellist");
     const decodedChannels = channels.map(decodeTSObject);
@@ -128,6 +127,17 @@ io.on("connection", async (socket) => {
     socket.emit("channels", decodedChannels);
   } catch (err) {
     console.error("initial channellist error:", err.message);
+  }
+
+  try {
+    const info = await ts.send("serverinfo");
+    const server = Array.isArray(info) ? info[0] : info;
+    let serverName = server?.virtualserver_name || "Unknown Server";
+    let serverMaxClients = server?.virtualserver_maxclients || "32";
+    let serverClientsOnline = server?.virtualserver_clientsonline || "0";
+    socket.emit("serverInfo", serverName, serverMaxClients, serverClientsOnline);
+  } catch (err) {
+    console.error("initial serverinfo error:", err.message);
   }
 
   socket.on("sendCommand", async (cmd) => {
@@ -151,7 +161,6 @@ setInterval(async () => {
     console.error("clientlist error:", e.message);
   }
 
-  // Periodically update channels as well
   try {
     const channels = await ts.send("channellist");
     const decodedChannels = channels.map(decodeTSObject);
@@ -159,6 +168,17 @@ setInterval(async () => {
     io.emit("channels", decodedChannels);
   } catch (e) {
     console.error("channellist error:", e.message);
+  }
+
+  try {
+    const info = await ts.send("serverinfo");
+    const server = Array.isArray(info) ? info[0] : info;
+    let serverName = server?.virtualserver_name || "Unknown Server";
+    let serverMaxClients = server?.virtualserver_maxclients || "32";
+    let serverClientsOnline = server?.virtualserver_clientsonline || "0";
+    io.emit("serverInfo", serverName, serverMaxClients, serverClientsOnline);
+  } catch (e) {
+    console.error("serverinfo error:", e.message);
   }
 }, 10_000);
 //#endregion
