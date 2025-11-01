@@ -11,7 +11,7 @@ Built with **Node.js (Express + Socket.IO + SSH2)** on the backend.
 
 ## Features
 
-- Live client list with automatic updates every few seconds
+- Live client list with automatic updates every few seconds (Thanks to [@Leon](https://github.com/LeonMarcel-HD) for the channel list part)
 - Socket.IO real-time bridge between backend and frontend
 - Modern UI built with HeroUI + TailwindCSS (Modern but empty)
 - Works out of the box with any TS6 server with SSH Query enabled
