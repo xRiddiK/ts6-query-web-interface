@@ -15,7 +15,7 @@ ENV VITE_API_URL=${VITE_API_URL}
 ENV VITE_TS_INVID=${VITE_TS_INVID}
 
 COPY package*.json ./
-RUN npm ci --omit=dev || npm install
+RUN npm ci || npm install
 
 COPY . .
 RUN npm run build
