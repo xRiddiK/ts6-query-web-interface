@@ -17,6 +17,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: <enter your backend URL here>
+        VITE_TS_INVID: <enter your TeamSpeak Invid here>
     ports:
       - "3001:80"
     depends_on:
@@ -24,8 +27,6 @@ services:
     restart: unless-stopped
     networks:
       - ts6-network
-    env_file:
-      - ./frontend/.env.build
 
 networks:
   ts6-network:

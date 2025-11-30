@@ -4,10 +4,6 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
-# Copy .env.build and load it
-COPY .env.build .env.build
-RUN set -a && . ./.env.build && set +a
-
 ARG VITE_API_URL
 ARG VITE_TS_INVID
 
@@ -15,7 +11,7 @@ ENV VITE_API_URL=${VITE_API_URL}
 ENV VITE_TS_INVID=${VITE_TS_INVID}
 
 COPY package*.json ./
-RUN npm ci || npm install
+RUN npm install --no-audit --no-fund
 
 COPY . .
 RUN npm run build
