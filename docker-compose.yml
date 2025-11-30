@@ -17,7 +17,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args_file: .env.build
     ports:
       - "3001:80"
     depends_on:
@@ -25,6 +24,8 @@ services:
     restart: unless-stopped
     networks:
       - ts6-network
+    env_file:
+      - ./frontend/.env.build
 
 networks:
   ts6-network:
