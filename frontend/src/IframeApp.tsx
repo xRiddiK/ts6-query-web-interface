@@ -163,7 +163,7 @@ function IframeApp() {
 
   function renderChannelNode(node: TSChannelNode, depth = 0): JSX.Element {
     const chName = node.channel_name ?? "";
-    const isSpacer = /\[c?spacer[^\]]*\]/i.test(chName);
+    const isSpacer = /\[*c?spacer[^\]]*\]/i.test(chName);
     const chClients = (clientsByChannel[String(node.cid)] ?? [])
       .slice()
       .sort((a, b) => a.client_nickname.localeCompare(b.client_nickname, "de"));
@@ -174,11 +174,12 @@ function IframeApp() {
       ? chName.replace(/\[.*?\]/, "").trim() || "──────────"
       : chName || "(unnamed)";
 
+    
     return (
       <Fragment key={node.cid}>
         <tr>
-          <td colSpan={2} className="p-0">
-            <div
+          <td colSpan={2} className="p-0  ">
+            <div 
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -189,28 +190,30 @@ function IframeApp() {
                   : depth % 2
                     ? "rgba(255,255,255,0.02)"
                     : "transparent",
-                opacity: isSpacer ? 0.6 : 1,
-                fontWeight: isSpacer ? 500 : 600,
-                color: isSpacer ? "#000000" : "inherit",
+                opacity: isSpacer ? 1 : 1,
+                fontWeight: isSpacer ? 600 : 600,
+                
                 borderBottom: isSpacer
                   ? "1px solid rgba(255,255,255,0.05)"
                   : "none",
               }}
             >
               {!isSpacer && (
-                <div
+                <div               
                   style={{
                     width: 15,
                     height: 16.5,
                     clipPath:
                       "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-                    background: "#2980c3",
+                    background: "#0091ffff",
+                    border: "1px solid #000000",
                     boxShadow: "0 0 6px rgba(99,102,241,0.15)",
                     marginRight: 8,
                   }}
                 />
               )}
               {displayText}
+
             </div>
           </td>
         </tr>
@@ -222,6 +225,7 @@ function IframeApp() {
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  fontWeight: 600,
                   padding: "6px 12px",
                   paddingLeft: `${indentPx + 28}px`,
                   color: "inherit",
@@ -233,7 +237,8 @@ function IframeApp() {
                     width: 12,
                     height: 12,
                     borderRadius: 99,
-                    background: "rgba(148,163,184,0.5)",
+                    border: "1px solid #000000",
+                    background: "#0BDA51",
                     marginRight: 10,
                   }}
                 />
@@ -263,7 +268,7 @@ function IframeApp() {
         <div className="w-full max-w-full bg-transparent shadow-none rounded-lg p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2 mb-2 text-sm font-semibold text-white-800 dark:text-white">
             <ServerStackIcon className="w-4 h-4" />
-            <span>{serverInfo?.virtualserver_name || "Server"}</span>
+            <span>{serverInfo?.virtualserver_name.replaceAll("\\p", "|") || "Server"}</span>
           </div>
           <table className="table w-full text-left text-sm text-white-900 dark:text-white">
             <tbody>
