@@ -1,8 +1,8 @@
 import { useEffect, useState, Fragment, type JSX } from "react";
 import { io, Socket } from "socket.io-client";
+import { Accordion, AccordionItem } from "@heroui/react";
 import tsLogo from "./assets/teamspeak_blue.svg";
 import { UserGroupIcon, PlayCircleIcon, ExclamationCircleIcon, ServerStackIcon } from '@heroicons/react/24/outline';
-import { Accordion, AccordionItem } from "@heroui/react";
 import "./App.css";
 
 interface TSServerInfo {
@@ -51,6 +51,7 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
 );
 
 const tsLink = `https://tmspk.gg/${import.meta.env.VITE_TS_INVID}`;
+const isServerTreeExpanded = import.meta.env.VITE_SERVER_TREE_EXPANDED !== "false";
 
 function App() {
   const [serverInfo, setServerInfo] = useState<TSServerInfo | null>(null);
@@ -299,10 +300,18 @@ function App() {
       </div>
 
       {/* Server tree: channels with users listed under each channel */}
-      {channelTree.length > 0 ? (
+      {channelTree.length > 0 && (
         <div className="mt-8 card w-full max-w-sm bg-base-100 shadow-xl rounded-xl p-6 flex flex-col items-center gap-4 bg-neutral-900">
-          <Accordion isCompact>
-            <AccordionItem key="1" aria-label="Server" title={serverInfo?.virtualserver_name} className="font-normal" startContent={<ServerStackIcon className="w-5 h-5" />}>
+          <Accordion defaultExpandedKeys={isServerTreeExpanded ? ["server-tree"] : []}>
+            <AccordionItem
+              key="server-tree"
+              title={
+                <div className="flex items-center gap-2">
+                  <ServerStackIcon className="w-5 h-5" />
+                  <h2 className="font-semibold">{serverInfo?.virtualserver_name}</h2>
+                </div>
+              }
+            >
               <table className="table w-full text-left text-sm text-gray-300">
                 <tbody>
                   {channelTree.map((node) => renderChannelNode(node))}
@@ -311,8 +320,6 @@ function App() {
             </AccordionItem>
           </Accordion>
         </div>
-      ) : (
-        <div className="mt-8 text-gray-500 italic font-normal">No channels available.</div>
       )}
 
       {/* Footer */}
