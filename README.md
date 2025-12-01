@@ -15,6 +15,7 @@ Built with **Node.js (Express + Socket.IO + SSH2)** on the backend.
 - Socket.IO real-time bridge between backend and frontend
 - Modern UI built with HeroUI + TailwindCSS (Modern but empty)
 - Works out of the box with any TS6 server with SSH Query enabled
+- Support for iframe use to embedd a live client list on your homepage (/iframe on the frontend)
 
 ![Web App](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/webapp.png)
 ![Web App](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/expanded_channelList.png)
