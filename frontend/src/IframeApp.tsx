@@ -53,7 +53,6 @@ function IframeApp() {
   const [clients, setClients] = useState<TSClient[]>([]);
   const [channels, setChannels] = useState<TSChannel[]>([]);
   const [error, setError] = useState<JSX.Element | null>(null);
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   useEffect(() => {
     socket.on("connect", () => console.log("✅ Socket connected"));
