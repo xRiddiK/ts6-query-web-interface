@@ -20,13 +20,84 @@ Built with **Node.js (Express + Socket.IO + SSH2)** on the backend.
 ![Web App](https://raw.githubusercontent.com/xRiddiK/ts6-query-web-interface/refs/heads/main/screenshots/expanded_channelList.png)
 ---
 
+
+# 🐬 Setup Instructions with Docker
+
+## Requirements
+
+- Docker
+- docker compose
+- git
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/xRiddiK/ts6-query-web-interface.git
+```
+
+## 2. Setup compose file
+Open the `docker.compose.yml` file and adjust the following variables:
+
+- VITE_API_URL: Set this to the URL of your backend container 
+    - **Important**: Ensure the backend container is reachable from the client's browser to establish the WebSocket connection.
+
+- VITE_TS_INVID: Enter your TeamSpeak Invid (Invites/Invitations ID) here.
+
+example:
+```env
+VITE_API_URL: http://backend:8888
+VITE_TS_INVID: AAAAAA
+```
+### 3. Connect the Backend to your Server
+First make sure you setup your TeamSpeak 6 Server inclusive SSH login correctly.
+
+you can test it locally via PowerShell (on Windows) with:
+```
+ssh -p 10022 serveradmin@<ts6-server-ip>
+```
+More information at
+[TeamSpeak 6 Server Beta](https://github.com/teamspeak/teamspeak6-server/blob/main/CONFIG.md)
+
+If that works you can continue with the backend.
+>
+In the backend folder, rename:
+```
+.env.example → .env
+```
+The .env should look like this:
+```
+TS_HOST=127.0.0.1
+TS_PORT=10022
+TS_USER=serveradmin
+TS_PASS=supersecretpassword
+```
+(TS_PASS = query admin-password)
+adjust it to your data.
+
+The backend is now fully setup.
+
+## 4. Build containers
+Since the backend and frontend containers are not available on a public registry, you must build the Docker images locally:
+```bash
+docker compose build
+```
+
+
+## 5. Startup containers
+Start the containers in detached mode (-d):
+```bash
+docker compose up -d 
+```
+🎉 The application should now be running at the configured address.
+
+
+# 🛠️ Setup Instructions with node
+
 ## Requirements
 
 - [Node.js](https://nodejs.org/) (v22+ recommended)
-- [pnpm](https://pnpm.io/) *(optional but faster than npm)*
+- [pnpm](https://pnpm.io/) *(optional but faster than npm)
 - Basic knowledge of JavaScript/TypeScript and the terminal
-
-## 🛠️ Setup Instructions
 
 ### 1. Clone the Repository
 
