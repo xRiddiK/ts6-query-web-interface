@@ -269,6 +269,7 @@ function IframeApp() {
           <div className="flex items-center gap-2 mb-2 text-sm font-semibold text-white-800 dark:text-white">
             <ServerStackIcon className="w-4 h-4" />
             <span>{serverInfo?.virtualserver_name.replaceAll("\\p", "|") || "Server"}</span>
+            <span>{clients.length}/{serverInfo?.virtualserver_maxclients}</span>
           </div>
           <table className="table w-full text-left text-sm text-white-900 dark:text-white">
             <tbody>
